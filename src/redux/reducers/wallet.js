@@ -12,12 +12,10 @@ function userReducers(state = initialState, action) {
   switch (action.type) {
   case 'NEW_WALLET':
     return {
-      wallet: {
-        currencies: [],
-        expenses: [],
-        editor: false,
-        idToEdit: 0,
-      },
+      currencies: action.response.currencies,
+      expenses: [],
+      editor: false,
+      idToEdit: 0,
     };
   default:
     return state;
