@@ -77,8 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 WalletForm.propTypes = {
-  currencies: PropTypes.forbid(['USD', 'USD', 'CAD', 'GBP', 'ARS', 'BTC', 'LTC',
-    'EUR', 'JPY', 'CHF', 'AUD', 'CNY', 'ILS', 'ETH', 'XRP', 'DOGE']).isRequired,
+  currencies: PropTypes.instanceOf(Array).isRequired,
   getCurrencies: PropTypes.func.isRequired,
 };
 
