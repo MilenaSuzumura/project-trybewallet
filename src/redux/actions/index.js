@@ -10,6 +10,9 @@ export function fetchCurrencies() {
       const json = await response.json();
       const object = Object.values(json);
       const objectEnd = object.reduce((acc, currency) => {
+        if (Object.values(acc.currencies).includes(currency.code)) {
+          return acc;
+        }
         acc.currencies.push(currency.code);
         return acc;
       }, { currencies: [] });
