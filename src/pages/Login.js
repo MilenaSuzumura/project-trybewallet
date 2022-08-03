@@ -17,9 +17,7 @@ class Login extends React.Component {
     const info1 = email.includes('@');
     const ponto = email.includes('.com');
     const semEspaço = email.includes(' ');
-    if (info1 && ponto && !semEspaço) {
-      return true;
-    }
+    if (info1 && ponto && !semEspaço) return true;
     return false;
   }
 
