@@ -1,20 +1,57 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 // Referência: https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/th
-export default class Table extends Component {
+class Table extends Component {
   render() {
+    const { expenses } = this.props;
     return (
-      <tr>
-        <th scope="col">Descrição</th>
-        <th scope="col">Tag</th>
-        <th scope="col">Método de pagamento</th>
-        <th scope="col">Valor</th>
-        <th scope="col">Moeda</th>
-        <th scope="col">Câmbio utilizado</th>
-        <th scope="col">Valor convertido</th>
-        <th scope="col">Moeda de conversão</th>
-        <th scope="col">Editar/Excluir</th>
-      </tr>
+      <table>
+        <tr>
+          <th>Descrição</th>
+          <th>Tag</th>
+          <th>Método de pagamento</th>
+          <th>Valor</th>
+          <th>Moeda</th>
+          <th>Câmbio utilizado</th>
+          <th>Valor convertido</th>
+          <th>Moeda de conversão</th>
+          <th>Editar/Excluir</th>
+        </tr>
+        <tbody>
+          {
+            expenses !== undefined && (
+              expenses.map((expense) => (
+                <tr key={ expense.id }>
+                  <th>{expense.description}</th>
+                  <th>{expense.tag}</th>
+                  <th>{expense.method}</th>
+                  <th>{expense.value}</th>
+                  <th>{expense.currency}</th>
+                  <th>Cambio utilizado</th>
+                  <th>Valor convertido</th>
+                  <th>moeda de conversão</th>
+                  <th>
+                    <button type="button">Editar</button>
+                    <button type="button">Excluir</button>
+                  </th>
+                </tr>
+              ))
+            )
+          }
+        </tbody>
+      </table>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
+Table.propTypes = {
+  expenses: PropTypes.instanceOf(Array).isRequired,
+};
+
+export default connect(mapStateToProps, null)(Table);
