@@ -7,7 +7,7 @@ class WalletForm extends Component {
   constructor() {
     super();
     this.state = {
-      valor: 0,
+      valor: '',
       moeda: 'USD',
       pagamento: 'Dinheiro',
       category: 'Lazer',
@@ -26,7 +26,7 @@ class WalletForm extends Component {
     const { getExpenses } = this.props;
     getExpenses(this.state);
     this.setState({
-      valor: 0,
+      valor: '',
       moeda: 'USD',
       pagamento: 'Dinheiro',
       category: 'Lazer',
