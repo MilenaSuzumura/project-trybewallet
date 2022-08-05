@@ -6,7 +6,6 @@ class Header extends Component {
   calculadora = () => {
     const { expenses } = this.props;
     const resultado = expenses.reduce((acc, expense) => {
-      console.log(expense);
       const { exchangeRates } = expense;
       const { ask } = exchangeRates[expense.currency];
       const mult = expense.value * ask;

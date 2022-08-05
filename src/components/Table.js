@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Tables from './Tables';
 
 // Referência: https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/th
 class Table extends Component {
@@ -23,20 +24,7 @@ class Table extends Component {
           {
             expenses !== undefined && (
               expenses.map((expense) => (
-                <tr key={ expense.id }>
-                  <th>{expense.description}</th>
-                  <th>{expense.tag}</th>
-                  <th>{expense.method}</th>
-                  <th>{expense.value}</th>
-                  <th>{expense.currency}</th>
-                  <th>Cambio utilizado</th>
-                  <th>Valor convertido</th>
-                  <th>moeda de conversão</th>
-                  <th>
-                    <button type="button">Editar</button>
-                    <button type="button">Excluir</button>
-                  </th>
-                </tr>
+                <Tables key={ expense.id } expense={ expense } />
               ))
             )
           }
