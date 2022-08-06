@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { excluir } from '../redux/actions/index';
 
 // Referência: https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/th
 class Table extends Component {
@@ -21,6 +22,16 @@ class Table extends Component {
     const moedaFinal = objMoeda.filter((moedaObj) => moeda === moedaObj.code);
     const resultado = parseFloat(moedaFinal[0].ask);
     return resultado.toFixed(2);
+  }
+
+  excluirDespesa = (id) => {
+    const { excluiDespesa, expenses } = this.props;
+    excluiDespesa(id, expenses);
+  }
+
+  editarDespesa = (id) => {
+    const { editaDespesa, expenses } = this.props;
+    editaDespesa(id, expenses);
   }
 
   render() {
@@ -64,12 +75,14 @@ class Table extends Component {
                       <button
                         type="button"
                         data-testid="edit-btn"
+                        onClick={ () => this.editarDespesa(id) }
                       >
                         Editar
                       </button>
                       <button
                         type="button"
                         data-testid="delete-btn"
+                        onClick={ () => this.excluirDespesa(id) }
                       >
                         Excluir
                       </button>
@@ -89,8 +102,15 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  excluiDespesa: (id, expenses) => dispatch(excluir(id, expenses)),
+  editaDespesa: (id, expenses) => dispatch(excluir(id, expenses)),
+});
+
 Table.propTypes = {
   expenses: PropTypes.instanceOf(Array).isRequired,
+  excluiDespesa: PropTypes.func.isRequired,
+  editaDespesa: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, null)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

@@ -18,6 +18,11 @@ function userReducers(state = initialState, action) {
       ...state,
       currencies: action.response.currencies,
     };
+  case 'NEW_ARRAY_EXPENSES':
+    return {
+      ...state,
+      expenses: action.expenses,
+    };
   default:
     return state;
   }

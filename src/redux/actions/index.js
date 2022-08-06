@@ -5,6 +5,8 @@ const newCurrencies = (response) => ({ type: 'NEW_CURRENCIES', response });
 
 const newExpenses = (expenses) => ({ type: 'NEW_EXPENSES', expenses: expenses.expenses });
 
+const excluiExpense = (expenses) => ({ type: 'NEW_ARRAY_EXPENSES', expenses });
+
 const fetchAll = async () => {
   const url = 'https://economia.awesomeapi.com.br/json/all';
   const response = await fetch(url);
@@ -59,6 +61,27 @@ export function expensesFetch(expense) {
         },
       };
       dispatch(newExpenses(info));
+    } catch {
+      dispatch(Error);
+    }
+  };
+}
+
+export function excluir(id, expenses) {
+  return async (dispatch) => {
+    try {
+      const despesas = expenses.reduce((acc, expense, index) => {
+        if (expense.id === id) {
+          return acc;
+        }
+        const resultExpense = {
+          id: index,
+          ...expense,
+        };
+        acc.push(resultExpense);
+        return acc;
+      }, []);
+      dispatch(excluiExpense(despesas));
     } catch {
       dispatch(Error);
     }
