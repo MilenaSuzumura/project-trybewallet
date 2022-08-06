@@ -7,6 +7,10 @@ const newExpenses = (expenses) => ({ type: 'NEW_EXPENSES', expenses: expenses.ex
 
 const excluiExpense = (expenses) => ({ type: 'NEW_ARRAY_EXPENSES', expenses });
 
+export const editExpense = (id) => ({ type: 'NEW_EDIT', id });
+
+const editEnd = (expense) => ({ type: 'NEW_EDIT_END', expenses: expense });
+
 const fetchAll = async () => {
   const url = 'https://economia.awesomeapi.com.br/json/all';
   const response = await fetch(url);
@@ -82,6 +86,33 @@ export function excluir(id, expenses) {
         return acc;
       }, []);
       dispatch(excluiExpense(despesas));
+    } catch {
+      dispatch(Error);
+    }
+  };
+}
+
+export function editExpensesEnd(alteracao, expenses) {
+  return async (dispatch) => {
+    try {
+      const despesas = expenses.reduce((acc, expense) => {
+        if (expense.id === alteracao.id) {
+          const info = {
+            id: alteracao.id,
+            value: alteracao.valor,
+            currency: alteracao.moeda,
+            method: alteracao.pagamento,
+            tag: alteracao.category,
+            description: alteracao.description,
+            exchangeRates: expense.exchangeRates,
+          };
+          acc.push(info);
+        } else {
+          acc.push(expense);
+        }
+        return acc;
+      }, []);
+      dispatch(editEnd(despesas));
     } catch {
       dispatch(Error);
     }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { excluir } from '../redux/actions/index';
+import { excluir, editExpense } from '../redux/actions/index';
 
 // Referência: https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/th
 class Table extends Component {
@@ -30,8 +30,8 @@ class Table extends Component {
   }
 
   editarDespesa = (id) => {
-    const { editaDespesa, expenses } = this.props;
-    editaDespesa(id, expenses);
+    const { editaDespesa } = this.props;
+    editaDespesa(id);
   }
 
   render() {
@@ -104,7 +104,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   excluiDespesa: (id, expenses) => dispatch(excluir(id, expenses)),
-  editaDespesa: (id, expenses) => dispatch(excluir(id, expenses)),
+  editaDespesa: (id) => dispatch(editExpense(id)),
 });
 
 Table.propTypes = {

@@ -23,6 +23,19 @@ function userReducers(state = initialState, action) {
       ...state,
       expenses: action.expenses,
     };
+  case 'NEW_EDIT':
+    return {
+      ...state,
+      idToEdit: action.id,
+      editor: true,
+    };
+  case 'NEW_EDIT_END':
+    return {
+      ...state,
+      editor: false,
+      idToEdit: 0,
+      expenses: action.expenses,
+    };
   default:
     return state;
   }
