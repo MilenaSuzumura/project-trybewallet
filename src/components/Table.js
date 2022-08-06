@@ -61,8 +61,8 @@ class Table extends Component {
                     <td>{this.calculadora(expense)}</td>
                     <td>Real</td>
                     <td>
-                      <button type="button">Editar</button>
-                      <button type="button">Excluir</button>
+                      <button type="button" data-testid="edit-btn">Editar</button>
+                      <button type="button" data-testid="delete-btn">Excluir</button>
                     </td>
                   </tr>
                 );
