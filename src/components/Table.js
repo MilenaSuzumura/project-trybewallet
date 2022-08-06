@@ -1,10 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Tables from './Tables';
 
 // Referência: https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/th
 class Table extends Component {
+  calculadora = (expense) => {
+    const { currency, value, exchangeRates } = expense;
+    const { ask } = exchangeRates[currency];
+    const calc = parseFloat(ask) * parseFloat(value);
+    const resultado = !calc ? 0.00 : calc.toFixed(2);
+    return resultado;
+  }
+
+  filterMoeda = (moeda, objMoeda) => {
+    const moedaFinal = objMoeda.filter((moedaObj) => moeda === moedaObj.code);
+    return moedaFinal[0].name;
+  }
+
+  valorConversao = (moeda, objMoeda) => {
+    const moedaFinal = objMoeda.filter((moedaObj) => moeda === moedaObj.code);
+    const resultado = parseFloat(moedaFinal[0].ask);
+    return resultado.toFixed(2);
+  }
+
   render() {
     const { expenses } = this.props;
     return (
@@ -23,9 +41,32 @@ class Table extends Component {
         <tbody>
           {
             expenses !== undefined && (
-              expenses.map((expense) => (
-                <Tables key={ expense.id } expense={ expense } />
-              ))
+              expenses.map((expense) => {
+                const { id,
+                  description,
+                  tag,
+                  method,
+                  value,
+                  currency,
+                  exchangeRates } = expense;
+                const valor = parseFloat(value);
+                return (
+                  <tr key={ id }>
+                    <td>{description}</td>
+                    <td>{tag}</td>
+                    <td>{method}</td>
+                    <td>{valor.toFixed(2)}</td>
+                    <td>{this.filterMoeda(currency, Object.values(exchangeRates))}</td>
+                    <td>{this.valorConversao(currency, Object.values(exchangeRates))}</td>
+                    <td>{this.calculadora(expense)}</td>
+                    <td>Real</td>
+                    <td>
+                      <button type="button">Editar</button>
+                      <button type="button">Excluir</button>
+                    </td>
+                  </tr>
+                );
+              })
             )
           }
         </tbody>
